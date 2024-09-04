@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<dyte-meeting id="my-meeting"></dyte-meeting>
+
+<script>
+const init_meeting = async () => {
+    const meeting = await DyteClient.init({
+    authToken: '{{ auth_token }}',
+    defaults: {
+        audio: false,
+        video: false,
+    },
+    });
+
+    document.getElementById('my-meeting').meeting = meeting;
+};
+
+init_meeting();
+
+</script>
+
+{% endblock %}

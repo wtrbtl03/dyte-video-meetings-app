@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md">
+    <h1 class="text-2xl font-bold mb-4">Create a Meeting</h1>
+    
+    {% if messages %}
+    <div class="mb-4">
+        {% for message in messages %}
+        <div class="{% if message.tags %}{{ message.tags }}{% endif %} bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+            <span class="block sm:inline">{{ message }}</span>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    
+    <form method="post" class="space-y-4">
+        {% csrf_token %}
+        <div>
+            <label for="title" class="block text-sm font-medium text-gray-700">Meeting Title</label>
+            <input type="text" name="title" id="title" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+        </div>
+        <div class="flex items-center">
+        <label for="record_on_start" class="block text-sm font-medium text-gray-700">Record Meeting</label>
+        <label for="record_on_start" class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" name="record_on_start" id="record_on_start" class="sr-only peer">
+            <div class="relative w-11 h-6 ml-3 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+        </label>  
+            
+        </div>
+        <button type="submit" class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Create Meeting
+        </button>
+    </form>
+    {% if meeting_url %}
+    <div class="mt-4">
+        <p class="text-sm font-medium text-gray-700">Meeting URL:
+            <a href="{{ meeting_url }}" class="text-blue-500 hover:text-blue-700 break-all">{{ meeting_url|slice:"8:" }}</a>
+            <span id = "shameless-plug">Shameless Plug 😎</span>
+            <script>
+                const shamelessPlug = document.getElementById('shameless-plug');
+                shamelessPlug.style.transition = 'opacity 1s, background-color 1s';
+                shamelessPlug.style.opacity = '0';
+                shamelessPlug.style.backgroundColor = 'transparent';
+                setTimeout(function() {
+                    shamelessPlug.style.opacity = '1';
+                    shamelessPlug.style.backgroundColor = 'yellow';
+                    setTimeout(function() {
+                        shamelessPlug.style.opacity = '0';
+                        shamelessPlug.style.backgroundColor = 'transparent';
+                        setTimeout(function() {
+                            shamelessPlug.style.display = 'none';
+                        }, 1000);
+                    }, 2000);
+                }, 100);
+            </script>
+        </p>
+    </div>
+
+    {% endif %}
+</div>
+{% endblock %}
